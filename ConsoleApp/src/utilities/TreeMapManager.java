@@ -85,10 +85,15 @@ public class TreeMapManager {
             csvReader.readNext();
             try {
                 while ((line = csvReader.readNext()) != null) {
-                    Person newPerson = getElementFromCSV(line);
-                    if (newPerson != null) {
-                        personMap.put(newPerson.getId(), newPerson);
-                    }
+                    long idNum = Long.parseLong(line[0]);
+                    Coordinates tempCoord = new Coordinates(0.0, 0);
+                    tempCoord.setValFromString(line[2]);
+                    LocalDateTime tempDate = LocalDateTime.parse(line[3], Person.formatter);
+                    Location tempLoc = new Location(0, 0.0, 0L);
+                    tempLoc.setValFromString(line[8]);
+                    Person newPerson = new Person(idNum, line[1], tempCoord, tempDate,
+                            Long.parseLong(line[4]), Long.parseLong(line[5]), line[6], line[7], tempLoc);
+                    personMap.put(idNum, newPerson);
                 }
             } catch (Exception e) {
                 System.out.println("Ошибка при формировании начальной коллекции.");
@@ -100,37 +105,6 @@ public class TreeMapManager {
         }
     }
 
-    /**
-     * Method that adds a new Person element to a collection from a CSV line.
-     * @param line a String array of values from a CSV line
-     * @return a Person object parsed from the CSV line
-     */
-    public Person getElementFromCSV(String[] line)
-    {
-        try {
-            long idNum = Long.parseLong(line[0]);
-            if (!personMap.isEmpty()) {
-                if (hasID(idNum)) {
-                    System.out.println("ID не уникален.");
-                    return null;
-                }
-                if (!isUniquePassport(line[6])) {
-                    System.out.println("ID паспорта не уникален.");
-                    return null;
-                }
-            }
-            Coordinates tempCoord = new Coordinates(0.0, 0);
-            tempCoord.setValFromString(line[2]);
-            LocalDateTime tempDate = LocalDateTime.parse(line[3], Person.formatter);
-            Location tempLoc = new Location(0, 0.0, 0L);
-            tempLoc.setValFromString(line[8]);
-            return new Person(idNum, line[1], tempCoord, tempDate,
-                    Long.parseLong(line[4]), Long.parseLong(line[5]), line[6], line[7], tempLoc);
-        }catch (Exception ex){
-            System.out.println("Ошибка при вводе значения.");
-            return null;
-        }
-    }
     /**
      * Method used for displaying a list of Person elements in the collection.
      */

@@ -1,7 +1,7 @@
-import java.io.IOException;
-
-import utilities.TreeMapManager;
 import utilities.CommandManager;
+import utilities.TreeMapManager;
+
+import java.io.IOException;
 
 public class Main {
     /** Main method of the console application.

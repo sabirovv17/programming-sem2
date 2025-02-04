@@ -48,22 +48,19 @@ public class CommandManager {
         while (!userCommand.equals("exit")) {
             System.out.print("> ");
             if (!scriptMode) {
-                userCommand = commandReader.nextLine();
+                userCommand = commandReader.nextLine().toLowerCase();
             } else {
                 if (scriptReader.hasNextLine()) {
-                    userCommand = scriptReader.nextLine();
+                    userCommand = scriptReader.nextLine().toLowerCase();
                     System.out.println(userCommand);
                 } else {
                     scriptMode = false;
-                    System.out.println("\b\b");
-                    continue;
                 }
             }
             if (commandHistory.size() > 10) {
                 commandHistory.removeLast();
             }
             String[] finalUserCommand = userCommand.trim().split(" ", 2);
-            finalUserCommand[0] = finalUserCommand[0].toLowerCase();
             try {
                 switch (finalUserCommand[0]) {
                     case "", "exit" -> {
@@ -72,12 +69,7 @@ public class CommandManager {
                     case "help" -> printHelp();
                     case "info" -> System.out.println(manager.toString());
                     case "insert" -> {
-                        Person insPerson;
-                        if (finalUserCommand.length > 1){
-                            insPerson = manager.getElementFromCSV(finalUserCommand[1].split(","));
-                        } else{
-                            insPerson = getPersonInput();
-                        }
+                        Person insPerson = getPersonInput();
                         manager.insert(insPerson);
                     }
                     case "update" -> {
@@ -122,10 +114,6 @@ public class CommandManager {
                     case "print_ascending" -> manager.print_asc();
                     case "print_field_ascending_location" -> manager.print_asc_loc();
                     case "execute_script" -> {
-                        if (scriptMode){
-                            System.out.println("Невозможно запустить новый скрипт до завершения предыдущего.");
-                            break;
-                        }
                         try {
                             scriptReader = new Scanner(new File(finalUserCommand[1]));
                             scriptMode = true;

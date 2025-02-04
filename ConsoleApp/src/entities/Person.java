@@ -31,8 +31,7 @@ public class Person implements Comparable<Person>{
      * @param eyeColor person's eye color parameter from preset values
      * @param location location parameter of a person
      */
-    public Person(String name, entities.Coordinates coordinates,
-                  long height, Long weight, String passportID,
+    public Person(String name, entities.Coordinates coordinates, long height, Long weight, String passportID,
                   entities.Color eyeColor, entities.Location location) {
 
         this.coordinates = coordinates != null ? coordinates : new entities.Coordinates(0.0, 0);
@@ -59,8 +58,7 @@ public class Person implements Comparable<Person>{
      * @param eyeColor person's eye color parameter from preset values
      * @param location location parameter of a person
      */
-    public Person(long id, String name, entities.Coordinates coordinates,
-                  java.time.LocalDateTime creationDate, long height, Long weight, String passportID,
+    public Person(long id, String name, entities.Coordinates coordinates, java.time.LocalDateTime creationDate, long height, Long weight, String passportID,
                   String eyeColor, entities.Location location) {
         this.id = id;
         if (id > counter_id)
